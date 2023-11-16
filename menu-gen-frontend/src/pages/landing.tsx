@@ -32,6 +32,16 @@ const LandingPage = () => {
         backgroundColor: "#f7f7f7",
       }}
     >
+      <img
+        src="https://i.imgur.com/y3Isi62.jpeg"
+        alt="chef"
+        style={{
+          maxWidth: "150px",
+          height: "auto",
+          marginBottom: "1rem",
+          marginTop: -165,
+        }}
+      />
       <h1 style={titleStyle}>QuickMenu</h1>
       <h2 style={sloganStyle}>Your digital menu, a scan away!</h2>
       <Button
