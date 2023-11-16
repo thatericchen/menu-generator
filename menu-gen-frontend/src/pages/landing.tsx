@@ -1,7 +1,10 @@
 import React from "react";
 import { Button } from "@nextui-org/react";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+
   return (
     <div
       style={{
@@ -14,7 +17,7 @@ const LandingPage = () => {
     >
       <h1>QuickMenu</h1>
       <h1>Your digital menu, a scan away!</h1>
-      <Button>Enter</Button>
+      <Button onClick={() => navigate("/input")}>Enter</Button>
     </div>
   );
 };
