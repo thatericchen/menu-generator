@@ -38,25 +38,12 @@ const LandingPage = () => {
         style={{
           maxWidth: "150px",
           height: "auto",
-          marginBottom: "1rem",
-          marginTop: -165,
+          marginTop: -130,
         }}
       />
       <h1 style={titleStyle}>QuickMenu</h1>
       <h2 style={sloganStyle}>Your digital menu, a scan away!</h2>
-      <Button
-        onClick={() => navigate("/input")}
-        style={{
-          backgroundColor: "#0070f3",
-          color: "white",
-          padding: "10px 20px",
-          borderRadius: "5px",
-          border: "none",
-          fontSize: "1rem",
-          cursor: "pointer",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-        }}
-      >
+      <Button color="primary" onClick={() => navigate("/input")}>
         Enter
       </Button>{" "}
     </div>
