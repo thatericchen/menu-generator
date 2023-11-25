@@ -93,8 +93,44 @@ const InputPage = () => {
     }
   };
 
-  const handleSubmit = () => {
-    window.location.href = "/menu";
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('restaurantName', restaurantName);
+    formData.append('restaurantSlogan', restaurantSlogan);
+    if (restaurantLogo) {
+      formData.append('restaurantLogo', restaurantLogo);
+    }
+
+    foodItems.forEach((item, index) => {
+      formData.append(`foodItems[${index}].title`, item.title);
+      formData.append(`foodItems[${index}].description`, item.description);
+      formData.append(`foodItems[${index}].price`, item.price);
+      formData.append(`foodItems[${index}].dietaryRestrictions`, item.dietaryRestrictions);
+      formData.append(`foodItems[${index}].vegetarian`, item.vegetarian);
+      formData.append(`foodItems[${index}].spicy`, item.spicy);
+      formData.append(`foodItems[${index}].glutenFree`, item.glutenFree);
+      if (item.picture) {
+        formData.append(`foodItems[${index}].picture`, item.picture);
+      }
+    });
+
+    try {
+      const response = await fetch('http://localhost:5002/submit', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        // Navigate to the PDF URL
+        window.location.href = responseData.pdf_url;
+      } else {
+        console.error('Form submission failed');
+      }
+    } catch (error) {
+      console.error('There was an error submitting the form', error);
+    }
   };
 
   return (
