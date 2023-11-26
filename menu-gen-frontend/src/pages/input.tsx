@@ -117,7 +117,7 @@ const InputPage = () => {
 
     try {
       if (localStorage.token) {
-      const response = await fetch('https://cs-3300-final-project.ue.r.appspot.com//submit', {
+      const response = await fetch(import.meta.env["BACKEND_URI"] + '/submit', {
         method: 'POST',
         headers: {
           'x-access-token': localStorage.token,
