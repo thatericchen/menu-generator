@@ -23,11 +23,8 @@ interface FoodItem {
   glutenFree: boolean;
 }
 
-interface InputPageProps {
-  token: string | null;
-}
 
-const InputPage = ({ token }: InputPageProps) => {
+const InputPage = () => {
   const [restaurantName, setRestaurantName] = useState("");
   const [restaurantLogo, setRestaurantLogo] = useState<File | null>(null);
   const [itemPicture, setItemPicture] = useState<File | null>(null);
@@ -97,7 +94,7 @@ const InputPage = ({ token }: InputPageProps) => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('restaurantName', restaurantName);
@@ -111,20 +108,20 @@ const InputPage = ({ token }: InputPageProps) => {
       formData.append(`foodItems[${index}].description`, item.description);
       formData.append(`foodItems[${index}].price`, item.price);
       formData.append(`foodItems[${index}].dietaryRestrictions`, item.dietaryRestrictions);
-      formData.append(`foodItems[${index}].vegetarian`, item.vegetarian);
-      formData.append(`foodItems[${index}].spicy`, item.spicy);
-      formData.append(`foodItems[${index}].glutenFree`, item.glutenFree);
+      formData.append(`foodItems[${index}].vegetarian`, String(item.vegetarian));
+      formData.append(`foodItems[${index}].spicy`, String(item.spicy));
+      formData.append(`foodItems[${index}].glutenFree`, String(item.glutenFree));
       if (item.picture) {
         formData.append(`foodItems[${index}].picture`, item.picture);
       }
     });
 
     try {
-      if (token != null) {
+      if (localStorage.token) {
       const response = await fetch('http://localhost:5002/submit', {
         method: 'POST',
         headers: {
-          'x-access-token': token,
+          'x-access-token': localStorage.token,
         },
         body: formData,
       });

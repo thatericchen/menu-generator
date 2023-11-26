@@ -3,17 +3,19 @@ import { Tabs, Tab, Link, Card, CardBody } from "@nextui-org/react";
 import LoginForm from "./LoginForm";
 import AccountForm from "./RegisterForm";
 import InputPage from "./input";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
   const [selected, setSelected] = React.useState("login");
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [token, setToken] = React.useState<string | null>(null);
+  const navigate = useNavigate();
   
   const handleLogin = (data: any) => {
     console.log(data);
     setIsLoggedIn(true);
     if (data.hasOwnProperty("token")) {
-      setToken(data.token);
+      localStorage.setItem("token", data.token)
+      navigate("/input");
     }
   };
 
@@ -55,7 +57,6 @@ const LoginPage: React.FC = () => {
           </CardBody>
         </Card>
       )}
-      {isLoggedIn && <InputPage token={token} />}
     </div>
   );
 };

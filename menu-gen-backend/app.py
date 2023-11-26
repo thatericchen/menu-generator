@@ -157,11 +157,15 @@ def submit_form(current_user):
         picture = request.files.get(f'foodItems[{index}].picture')
         picture_url = None
 
+        picture_filename = ''
+        picture_path = ''
+        picture_url = ''
+
         if picture:
             picture_filename = secure_filename(picture.filename)
             picture_path = os.path.join(app.config['UPLOAD_FOLDER'], picture_filename)
             picture.save(picture_path)
-            picture_url = f"{app.config['FRONTEND_URL']}/uploads/{logo_filename}"
+            picture_url = f"{app.config['FRONTEND_URL']}/uploads/{picture_filename}"
 
         item_data = {
             'title': title,
