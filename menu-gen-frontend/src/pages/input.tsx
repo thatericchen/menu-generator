@@ -139,26 +139,8 @@ const InputPage = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <h1
-        style={{
-          textAlign: "center",
-          margin: "20px 0",
-          fontSize: "1.5rem",
-          color: "#0070f3",
-          fontWeight: "bold",
-          textShadow: "2px 2px 8px rgba(0, 0, 0, 0.2)",
-          marginBottom: "0.5rem",
-          fontFamily: '"Montserrat", sans-serif',
-        }}
-      >
+    <div className="flex flex-col items-center justify-center">
+      <h1 className="text-center text-2xl font-bold text-blue-600 my-5">
         Restaurant Information
       </h1>
 
@@ -181,7 +163,7 @@ const InputPage = () => {
           style={{
             display: "flex",
             justifyContent: "center",
-            margin: "10px 0",
+            margin: "10px 10px 10px 10px",
           }}
         >
           <Button
@@ -229,18 +211,7 @@ const InputPage = () => {
         </Modal>
       </div>
 
-      <h2
-        style={{
-          textAlign: "center",
-          margin: "20px 0",
-          fontSize: "1.5rem",
-          color: "#0070f3",
-          fontWeight: "bold",
-          textShadow: "2px 2px 8px rgba(0, 0, 0, 0.2)",
-          marginBottom: "0.5rem",
-          fontFamily: '"Montserrat", sans-serif',
-        }}
-      >
+      <h2 className="text-center text-2xl font-bold text-blue-600 my-5">
         Menu Items
       </h2>
       {foodItems.map((item, index) => (
@@ -374,6 +345,13 @@ const InputPage = () => {
         onClick={handleSubmit}
       >
         Submit
+      </Button>
+      <Button
+        style={{ marginTop: 20, marginBottom: 30 }}
+        color="primary"
+        onClick={() => window.location.replace("/menus")}
+      >
+        See All Menus
       </Button>
     </div>
   );
