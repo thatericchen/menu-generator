@@ -131,10 +131,12 @@ def login():
 @app.route('/submit', methods=['POST'])
 @token_required
 def submit_form(current_user):
-    restaurant_name = request.form.get('restaurantName')
-    restaurant_slogan = request.form.get('restaurantSlogan')
+    restaurant_name = request.form.get('restaurantName', '')
+    restaurant_slogan = request.form.get('restaurantSlogan', '')
     restaurant_logo = request.files.get('restaurantLogo')
-    logo_url = None
+    logo_url = ''
+    logo_path = ''
+
     if restaurant_logo:
         logo_filename = secure_filename(restaurant_logo.filename)
         logo_path = os.path.join(app.config['UPLOAD_FOLDER'], logo_filename)
@@ -147,18 +149,15 @@ def submit_form(current_user):
         title = request.form.get(f'foodItems[{index}].title')
         if not title:
             break
-        description = request.form.get(f'foodItems[{index}].description')
-        price = request.form.get(f'foodItems[{index}].price')
-        dietary_restrictions = request.form.get(f'foodItems[{index}].dietaryRestrictions')
-        vegetarian = request.form.get(f'foodItems[{index}].vegetarian') == 'true'
-        spicy = request.form.get(f'foodItems[{index}].spicy') == 'true'
-        gluten_free = request.form.get(f'foodItems[{index}].glutenFree') == 'true'
+        description = request.form.get(f'foodItems[{index}].description', '')
+        price = request.form.get(f'foodItems[{index}].price', '')
+        dietary_restrictions = request.form.get(f'foodItems[{index}].dietaryRestrictions', '')
+        vegetarian = request.form.get(f'foodItems[{index}].vegetarian', 'false') == 'true'
+        spicy = request.form.get(f'foodItems[{index}].spicy', 'false') == 'true'
+        gluten_free = request.form.get(f'foodItems[{index}].glutenFree', 'false') == 'true'
         picture = request.files.get(f'foodItems[{index}].picture')
-        picture_url = None
-
-        picture_filename = ''
-        picture_path = ''
         picture_url = ''
+        picture_path = ''
 
         if picture:
             picture_filename = secure_filename(picture.filename)
@@ -180,6 +179,7 @@ def submit_form(current_user):
 
         food_items.append(item_data)
         index += 1
+
     user_json = json.loads(current_user)
     response = {
         'restaurant_name': restaurant_name,

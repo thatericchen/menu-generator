@@ -74,7 +74,13 @@ const InputPage = () => {
     value: any
   ) => {
     const newFoodItems = [...foodItems];
-    newFoodItems[index] = { ...newFoodItems[index], [field]: value };
+    if (field === 'picture') {
+      if (value.target.files) {
+        newFoodItems[index] = { ...newFoodItems[index], [field]: value.target.files[0] };
+      }
+    } else {
+      newFoodItems[index] = { ...newFoodItems[index], [field]: value };
+    }
     setFoodItems(newFoodItems);
   };
 
@@ -83,14 +89,6 @@ const InputPage = () => {
   ) => {
     if (e.target.files) {
       setRestaurantLogo(e.target.files[0]);
-    }
-  };
-
-  const handleDishImageModalChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (e.target.files) {
-      setItemPicture(e.target.files[0]);
     }
   };
 
@@ -111,6 +109,7 @@ const InputPage = () => {
       formData.append(`foodItems[${index}].vegetarian`, String(item.vegetarian));
       formData.append(`foodItems[${index}].spicy`, String(item.spicy));
       formData.append(`foodItems[${index}].glutenFree`, String(item.glutenFree));
+
       if (item.picture) {
         formData.append(`foodItems[${index}].picture`, item.picture);
       }
@@ -319,7 +318,7 @@ const InputPage = () => {
                   <ModalBody>
                     <Input
                       type="file"
-                      onChange={handleDishImageModalChange}
+                      onChange={(e) => handleFoodItemChange(index, "picture", e)}
                       accept="image/*"
                       style={{ padding: 10, borderColor: "#0070f3" }}
                     />
