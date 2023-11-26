@@ -117,7 +117,7 @@ const InputPage = () => {
 
     try {
       if (localStorage.token) {
-      const response = await fetch('http://localhost:5002/submit', {
+      const response = await fetch('https://cs-3300-final-project.ue.r.appspot.com//submit', {
         method: 'POST',
         headers: {
           'x-access-token': localStorage.token,

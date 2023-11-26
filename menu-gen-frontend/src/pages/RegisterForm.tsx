@@ -25,7 +25,7 @@ const AccountForm: React.FC<AccountFormProps> = ({ onLogin }) => {
     formData.append('firstName', account.firstName);
     formData.append('lastName', account.lastName);
 
-    const response = await fetch("http://localhost:5002/register", {
+    const response = await fetch("https://cs-3300-final-project.ue.r.appspot.com//register", {
       method: "POST",
       body: formData,
     });
