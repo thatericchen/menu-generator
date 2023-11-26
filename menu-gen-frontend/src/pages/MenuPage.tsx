@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Card, CardHeader, CardBody, CardFooter, Image } from '@nextui-org/react';
-import { Menu, FoodItem } from './MenusPage';
+import { Card, CardHeader, CardBody, Image } from '@nextui-org/react';
+import { Menu } from './MenusPage';
 
 const MenuPage = () => {
   const [menu, setMenu] = useState<Menu | null>(null);
