@@ -2,6 +2,7 @@ from functools import wraps
 from flask import Flask, request, jsonify, send_from_directory, redirect, url_for, render_template
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
+from werkzeug.datastructures import FileStorage
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
@@ -14,6 +15,10 @@ import json
 import jwt
 from datetime import datetime, timedelta
 import uuid
+from flask_googlestorage import GoogleStorage, Bucket
+
+files = Bucket("files")
+storage = GoogleStorage(files)
 
 load_dotenv()
 MONGO_URI = os.getenv('MONGO_URI')
@@ -27,6 +32,14 @@ collection = db.menus
 users_collection = db.users
 
 app = Flask(__name__)
+app.config.update(
+        GOOGLE_APPLICATION_CREDENTIALS = os.path.join(app.root_path, 'hello.json'),
+        GOOGLE_STORAGE_LOCAL_DEST = "tmp",
+        GOOGLE_STORAGE_SIGNATURE = {"expiration": timedelta(minutes=5)},
+        GOOGLE_STORAGE_FILES_BUCKET = "files-restaurant"
+    )
+storage.init_app(app)
+
 CORS(app)
 
 def generate_pdf(food_items, upload_folder):
@@ -134,14 +147,10 @@ def submit_form(current_user):
     restaurant_slogan = request.form.get('restaurantSlogan', '')
     restaurant_logo = request.files.get('restaurantLogo')
     logo_url = ''
-    logo_path = ''
 
     if restaurant_logo:
-        logo_filename = secure_filename(restaurant_logo.filename)
-        logo_path = os.path.join(UPLOAD_FOLDER, logo_filename)
-        restaurant_logo.save(logo_path)
-        logo_url = f"{BACKEND_URL}/{UPLOAD_FOLDER}/{logo_filename}"
-
+        name = files.save(restaurant_logo, public=True)
+        logo_url = str(files.url(str(name)))
     food_items = []
     index = 0
     while True:
@@ -156,13 +165,10 @@ def submit_form(current_user):
         gluten_free = request.form.get(f'foodItems[{index}].glutenFree', 'false') == 'true'
         picture = request.files.get(f'foodItems[{index}].picture')
         picture_url = ''
-        picture_path = ''
 
         if picture:
-            picture_filename = secure_filename(picture.filename)
-            picture_path = os.path.join(UPLOAD_FOLDER, picture_filename)
-            picture.save(picture_path)
-            picture_url = f"{BACKEND_URL}/{UPLOAD_FOLDER}/{picture_filename}"
+            name = files.save(picture, public=True)
+            picture_url = str(files.url(str(name)))
 
         item_data = {
             'title': title,
@@ -172,8 +178,7 @@ def submit_form(current_user):
             'vegetarian': vegetarian,
             'spicy': spicy,
             'gluten_free': gluten_free,
-            'picture_url': picture_url,
-            'picture_path': picture_path
+            'picture_url': picture_url
         }
 
         food_items.append(item_data)
@@ -184,7 +189,6 @@ def submit_form(current_user):
         'restaurant_name': restaurant_name,
         'restaurant_slogan': restaurant_slogan,
         'restaurant_logo_url': logo_url,
-        'restaurant_logo_path': logo_path,
         'owner': ObjectId(user_json['_id']),
         'food_items': food_items
     }

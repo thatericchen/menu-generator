@@ -2,7 +2,6 @@ import React, { Key } from "react";
 import { Tabs, Tab, Link, Card, CardBody } from "@nextui-org/react";
 import LoginForm from "./LoginForm";
 import AccountForm from "./RegisterForm";
-import InputPage from "./input";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
