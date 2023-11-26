@@ -43,7 +43,7 @@ const MenusPage = () => {
 
   const fetchMenus = async () => {
     try {
-      const response = await fetch('http://localhost:5002/menus', {
+      const response = await fetch('https://cs-3300-final-project.ue.r.appspot.com//menus', {
         method: 'GET',
         headers: {
           'x-access-token': localStorage.token,
