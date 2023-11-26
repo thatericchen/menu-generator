@@ -25,7 +25,7 @@ const AccountForm: React.FC<AccountFormProps> = ({ onLogin }) => {
     formData.append('firstName', account.firstName);
     formData.append('lastName', account.lastName);
 
-    const response = await fetch(import.meta.env["BACKEND_URI"] + "/register", {
+    const response = await fetch(import.meta.env["VITE_BACKEND_URI"] + "/register", {
       method: "POST",
       body: formData,
     });

@@ -17,6 +17,10 @@ import uuid
 
 load_dotenv()
 MONGO_URI = os.getenv('MONGO_URI')
+UPLOAD_FOLDER = os.getenv('UPLOAD_FOLDER')
+BACKEND_URL = os.getenv('BACKEND_URL')
+SECRET_KEY = os.getenv('SECRET_KEY')
+
 client = MongoClient(MONGO_URI)
 db = client.menu_gen
 collection = db.menus
@@ -24,12 +28,6 @@ users_collection = db.users
 
 app = Flask(__name__)
 CORS(app)
-
-UPLOAD_FOLDER = 'uploads'
-app.config['UPLOAD_FOLDER'] = "./menu-gen-frontend/uploads"
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-app.config['FRONTEND_URL'] = 'http://localhost:5173'
-app.config['SECRET_KEY'] = 'thisissecret'
 
 def generate_pdf(food_items, upload_folder):
     pdf_filename = 'menu.pdf'
@@ -73,7 +71,7 @@ def token_required(f):
         if not token:
             return jsonify({'message' : 'Token is missing'}), 401
         try:
-            data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
+            data = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
             #do this with pymongo
             u = users_collection.find_one({'public_id': data['public_id']})
             if u:
@@ -109,7 +107,7 @@ def register():
     token = jwt.encode({
             'public_id': u['public_id'],
             'exp': datetime.utcnow() + timedelta(minutes=30)
-        }, app.config['SECRET_KEY'])
+        }, SECRET_KEY)
     return jsonify({'token': token.decode('UTF-8')})
 
 @app.route('/login', methods =['POST'])
@@ -125,7 +123,7 @@ def login():
         token = jwt.encode({
             'public_id': u['public_id'],
             'exp': datetime.utcnow() + timedelta(minutes=30)
-        }, app.config['SECRET_KEY'])
+        }, SECRET_KEY)
         return jsonify({'token': token})
     return jsonify({'message': 'Invalid credentials!'}), 401
 
@@ -140,9 +138,9 @@ def submit_form(current_user):
 
     if restaurant_logo:
         logo_filename = secure_filename(restaurant_logo.filename)
-        logo_path = os.path.join(app.config['UPLOAD_FOLDER'], logo_filename)
+        logo_path = os.path.join(UPLOAD_FOLDER, logo_filename)
         restaurant_logo.save(logo_path)
-        logo_url = f"{app.config['FRONTEND_URL']}/uploads/{logo_filename}"
+        logo_url = f"{BACKEND_URL}/{UPLOAD_FOLDER}/{logo_filename}"
 
     food_items = []
     index = 0
@@ -162,9 +160,9 @@ def submit_form(current_user):
 
         if picture:
             picture_filename = secure_filename(picture.filename)
-            picture_path = os.path.join(app.config['UPLOAD_FOLDER'], picture_filename)
+            picture_path = os.path.join(UPLOAD_FOLDER, picture_filename)
             picture.save(picture_path)
-            picture_url = f"{app.config['FRONTEND_URL']}/uploads/{picture_filename}"
+            picture_url = f"{BACKEND_URL}/{UPLOAD_FOLDER}/{picture_filename}"
 
         item_data = {
             'title': title,
@@ -209,7 +207,7 @@ def get_menu(id):
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    return send_from_directory(UPLOAD_FOLDER, filename)
 
 if __name__ == '__main__':
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
