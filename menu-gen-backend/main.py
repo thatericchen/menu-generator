@@ -72,7 +72,6 @@ def token_required(f):
             token = request.headers['x-access-token']
         if not token:
             return jsonify({'message' : 'Token is missing'}), 401
-        print(token)
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
             #do this with pymongo
@@ -192,6 +191,14 @@ def submit_form(current_user):
     }
     insert = collection.insert_one(response)
     return jsonify({'id': str(insert.inserted_id)})
+
+@app.route('/menus')
+@token_required
+def get_menus(current_user):
+    user_json = json.loads(current_user)
+    menus = collection.find({'owner': ObjectId(user_json['_id'])})
+    menus = json.dumps(list(menus), default=str)
+    return menus
 
 @app.route('/menu/<id>')
 def get_menu(id):
