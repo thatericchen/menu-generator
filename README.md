@@ -170,9 +170,9 @@ Incorporate real-time data sources like traffic conditions, weather updates, and
 
 Custom user profiles would encourage long-term user engagement and offer personalized insights and recommendations. Users can track their progress, encouraging a continued commitment to reducing their carbon footprint during commutes.
 
-#### Team 8
-
 Hint:
 For the front-end, make sure to create a .env file with the following contents:
 BACKEND_URI="https://cs-3300-final-project.ue.r.appspot.com"
 If you're not using the deployed backend, change that URL to anything you want.
+
+### Team 8
