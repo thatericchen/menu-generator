@@ -1,3 +1,8 @@
-load_dotenv
-flask
-pymongo
+flask==2.2.2
+flask-cors==3.0.10
+werkzeug==2.2.2
+reportlab==3.5.67
+pymongo==3.11.4
+python-dotenv==0.17.1
+PyJWT==2.1.0
+dnspython==2.2.1
