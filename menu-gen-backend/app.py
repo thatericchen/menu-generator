@@ -90,7 +90,6 @@ def submit_form():
             picture_path = os.path.join(app.config['UPLOAD_FOLDER'], picture_filename)
             picture.save(picture_path)
             picture_url = f"{app.config['FRONTEND_URL']}/uploads/{logo_filename}"
-            print(f"Saved file to {picture_path}")
 
         item_data = {
             'title': title,
@@ -100,7 +99,8 @@ def submit_form():
             'vegetarian': vegetarian,
             'spicy': spicy,
             'gluten_free': gluten_free,
-            'picture_url': picture_url
+            'picture_url': picture_url,
+            'picture_path': picture_path
         }
 
         food_items.append(item_data)
@@ -110,6 +110,7 @@ def submit_form():
         'restaurant_name': restaurant_name,
         'restaurant_slogan': restaurant_slogan,
         'restaurant_logo_url': logo_url,
+        'restaurant_logo_path': logo_path,
         'food_items': food_items
     }
     insert = collection.insert_one(response)
