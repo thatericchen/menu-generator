@@ -24,7 +24,7 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center h-screen bg-gray-100">
       {!isLoggedIn && (
         <Card className="max-w-full w-[340px] h-[500px]">
           <CardBody className="overflow-hidden">

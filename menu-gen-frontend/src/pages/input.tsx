@@ -9,6 +9,9 @@ import {
   ModalFooter,
   useDisclosure,
   Checkbox,
+  Card,
+  CardBody,
+  Image,
 } from "@nextui-org/react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 
@@ -16,6 +19,7 @@ interface FoodItem {
   title: string;
   description: string;
   picture: File | null;
+  pictureUrl: string | null;
   price: string;
   dietaryRestrictions: string;
   vegetarian: boolean;
@@ -27,13 +31,14 @@ interface FoodItem {
 const InputPage = () => {
   const [restaurantName, setRestaurantName] = useState("");
   const [restaurantLogo, setRestaurantLogo] = useState<File | null>(null);
-  const [itemPicture, setItemPicture] = useState<File | null>(null);
+  const [restaurantLogoUrl, setRestaurantLogoUrl] = useState<string | null>(null);
   const [restaurantSlogan, setRestaurantSlogan] = useState("");
   const [foodItems, setFoodItems] = useState<FoodItem[]>([
     {
       title: "",
       description: "",
       picture: null,
+      pictureUrl: null,
       price: "",
       dietaryRestrictions: "",
       vegetarian: false,
@@ -59,6 +64,7 @@ const InputPage = () => {
         title: "",
         description: "",
         picture: null,
+        pictureUrl: null,
         price: "",
         dietaryRestrictions: "",
         vegetarian: false,
@@ -68,29 +74,24 @@ const InputPage = () => {
     ]);
   };
 
-  const handleFoodItemChange = (
-    index: number,
-    field: keyof FoodItem,
-    value: any
-  ) => {
+  const handleFoodItemChange = (index: number, field: keyof FoodItem, value: any) => {
     const newFoodItems = [...foodItems];
     if (field === 'picture') {
       if (value.target.files) {
-        newFoodItems[index] = { ...newFoodItems[index], [field]: value.target.files[0] };
+        newFoodItems[index] = { ...newFoodItems[index], [field]: value.target.files[0], pictureUrl: URL.createObjectURL(value.target.files[0]) };
       }
     } else {
       newFoodItems[index] = { ...newFoodItems[index], [field]: value };
     }
     setFoodItems(newFoodItems);
-  };
+  };  
 
-  const handleRestaurantLogoChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleRestaurantLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setRestaurantLogo(e.target.files[0]);
+      setRestaurantLogoUrl(URL.createObjectURL(e.target.files[0]));
     }
-  };
+  };  
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -117,7 +118,7 @@ const InputPage = () => {
 
     try {
       if (localStorage.token) {
-      const response = await fetch(import.meta.env["BACKEND_URI"] + '/submit', {
+      const response = await fetch(import.meta.env["VITE_BACKEND_URI"] + '/submit', {
         method: 'POST',
         headers: {
           'x-access-token': localStorage.token,
@@ -127,7 +128,8 @@ const InputPage = () => {
 
       if (response.ok) {
         const responseData = await response.json();
-        console.log(responseData);
+        console.log(responseData)
+        window.location.href = `./menu/${responseData.id}`;
       } else {
         console.error('Form submission failed');
       }
@@ -138,83 +140,81 @@ const InputPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <h1 className="text-center text-2xl font-bold text-blue-600 my-5">
-        Restaurant Information
-      </h1>
+    <div className="flex flex-col items-center justify-center bg-gray-100">
+<Card shadow-sm className="min-w-[400px] mx-auto p-4 items-center mb-5 mt-5">
+  <h1 className="text-center text-2xl font-bold">
+    Restaurant Information
+  </h1>
+  {restaurantLogoUrl && <Image src={restaurantLogoUrl} alt="Restaurant Logo" style={{ width: '128px', height: '128px' }} className='mt-5'/>}
+  <CardBody>
+    <Input
+      label="Restaurant Name"
+      value={restaurantName}
+      radius="sm"
+      onChange={(e) => setRestaurantName(e.target.value)}
+      className='mb-3'
+    />
 
-      <div style={{ width: "100%", maxWidth: "400px", margin: "0 auto" }}>
-        <Input
-          label="Restaurant Name"
-          value={restaurantName}
-          radius="sm"
-          onChange={(e) => setRestaurantName(e.target.value)}
-        />
+    <Input
+      label="Restaurant Slogan (Optional)"
+      value={restaurantSlogan}
+      radius="sm"
+      onChange={(e) => setRestaurantSlogan(e.target.value)}
+      className='mb-3'
+    />
 
-        <Input
-          label="Restaurant Slogan (Optional)"
-          value={restaurantSlogan}
-          radius="sm"
-          onChange={(e) => setRestaurantSlogan(e.target.value)}
-        />
+    <div className="flex justify-center">
+      <Button
+        radius="sm"
+        onPress={openRestaurantLogoModal}
+        style={{ backgroundColor: "#0070f3", color: "white" }}
+      >
+        <IoCloudUploadOutline size={20} style={{ marginRight: 8 }} />
+        Restaurant Logo
+      </Button>
+    </div>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            margin: "10px 10px 10px 10px",
-          }}
-        >
-          <Button
-            radius="sm"
-            onPress={openRestaurantLogoModal}
-            style={{ backgroundColor: "#0070f3", color: "white" }}
-          >
-            <IoCloudUploadOutline size={20} style={{ marginRight: 8 }} />
-            Restaurant Logo
-          </Button>
-        </div>
-
-        <Modal
-          isOpen={isRestaurantLogoModalOpen}
-          onOpenChange={setIsRestaurantLogoModalOpen}
-          style={{ borderRadius: 10 }}
-        >
-          <ModalContent>
-            {(onClose) => (
-              <>
-                <ModalHeader
-                  style={{ backgroundColor: "#f0f0f0", color: "#333" }}
-                >
-                  Upload Restaurant Logo
-                </ModalHeader>
-                <ModalBody>
-                  <Input
-                    type="file"
-                    onChange={handleRestaurantLogoChange}
-                    accept="image/*"
-                    style={{ padding: 10, borderColor: "#0070f3" }}
-                  />
-                </ModalBody>
-                <ModalFooter>
-                  <Button color="danger" variant="light" onPress={onClose}>
-                    Close
-                  </Button>
-                  <Button color="primary" onPress={onClose}>
-                    Upload
-                  </Button>
-                </ModalFooter>
-              </>
-            )}
-          </ModalContent>
-        </Modal>
-      </div>
-
-      <h2 className="text-center text-2xl font-bold text-blue-600 my-5">
+    <Modal
+      isOpen={isRestaurantLogoModalOpen}
+      onOpenChange={setIsRestaurantLogoModalOpen}
+      style={{ borderRadius: 10 }}
+    >
+      <ModalContent>
+        {(onClose) => (
+          <>
+            <ModalHeader style={{ backgroundColor: "#f0f0f0", color: "#333" }}>
+              Upload Restaurant Logo
+            </ModalHeader>
+            <ModalBody>
+              <Input
+                type="file"
+                onChange={handleRestaurantLogoChange}
+                accept="image/*"
+                style={{ padding: 10, borderColor: "#0070f3" }}
+              />
+            </ModalBody>
+            <ModalFooter>
+              <Button color="danger" variant="light" onPress={onClose}>
+                Close
+              </Button>
+              <Button color="primary" onPress={onClose}>
+                Upload
+              </Button>
+            </ModalFooter>
+          </>
+        )}
+      </ModalContent>
+    </Modal>
+  </CardBody>
+</Card>
+      <h2 className="text-center text-2xl font-bold mb-5">
         Menu Items
       </h2>
       {foodItems.map((item, index) => (
-        <div key={index} style={{ marginBottom: "25px" }}>
+        <Card shadow-sm className="min-w-[400px] mx-auto p-4 items-center mb-5">
+          {item.pictureUrl && <Image src={item.pictureUrl} alt="Item Picture" style={{ width: '128px', height: '128px' }} className='mb-5' />}
+        <div key={index}>
+        
           <Input
             label="Title"
             value={item.title}
@@ -222,6 +222,7 @@ const InputPage = () => {
             onChange={(e) =>
               handleFoodItemChange(index, "title", e.target.value)
             }
+            className='mb-3'
           />
           <Input
             label="Description"
@@ -230,6 +231,7 @@ const InputPage = () => {
             onChange={(e) =>
               handleFoodItemChange(index, "description", e.target.value)
             }
+            className='mb-3'
           />
           <Input
             label="Price"
@@ -238,6 +240,7 @@ const InputPage = () => {
             onChange={(e) =>
               handleFoodItemChange(index, "price", e.target.value)
             }
+            className='mb-3'
           />
 
           <Input
@@ -247,6 +250,7 @@ const InputPage = () => {
             onChange={(e) =>
               handleFoodItemChange(index, "dietaryRestrictions", e.target.value)
             }
+            className='mb-3'
           />
 
           <div style={{ marginTop: 5 }}>
@@ -257,7 +261,7 @@ const InputPage = () => {
               onChange={(e) =>
                 handleFoodItemChange(index, "vegetarian", e.target.checked)
               }
-              style={{ marginRight: "8px", marginLeft: 1 }}
+              className='mx-3'
             >
               Vegetarian
             </Checkbox>
@@ -265,10 +269,10 @@ const InputPage = () => {
               checked={item.spicy}
               radius="sm"
               size="sm"
+              className='mx-3'
               onChange={(e) =>
                 handleFoodItemChange(index, "spicy", e.target.checked)
               }
-              style={{ marginRight: "8px", marginLeft: 1 }}
             >
               Spicy
             </Checkbox>
@@ -276,10 +280,10 @@ const InputPage = () => {
               checked={item.glutenFree}
               radius="sm"
               size="sm"
+              className='mb-3 mx-3'
               onChange={(e) =>
                 handleFoodItemChange(index, "glutenFree", e.target.checked)
               }
-              style={{ marginRight: "8px", marginLeft: 1 }}
             >
               Gluten-Free
             </Checkbox>
@@ -336,6 +340,7 @@ const InputPage = () => {
             </ModalContent>
           </Modal>
         </div>
+        </Card>
       ))}
       <Button onClick={handleAddFoodItem}>Add Item</Button>
       <Button

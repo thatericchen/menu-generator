@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import {
-    Button,
-    Input,
-    Modal,
-    ModalContent,
-    ModalHeader,
-    ModalBody,
-    ModalFooter,
-    useDisclosure,
-    Checkbox,
+    Card,
+    CardHeader,
+    CardBody,
+    CardFooter,
     Link,
+    Image,
   } from "@nextui-org/react";
 
-interface Menu {
+export interface Menu {
   _id: string;
   restaurant_name: string;
   restaurant_slogan: string;
@@ -22,7 +18,7 @@ interface Menu {
   food_items: FoodItem[];
 }
 
-interface FoodItem {
+export interface FoodItem {
   title: string;
   description: string;
   price: string;
@@ -43,7 +39,7 @@ const MenusPage = () => {
 
   const fetchMenus = async () => {
     try {
-      const response = await fetch(import.meta.env["BACKEND_URI"] + '/menus', {
+      const response = await fetch(import.meta.env["VITE_BACKEND_URI"] + '/menus', {
         method: 'GET',
         headers: {
           'x-access-token': localStorage.token,
@@ -62,37 +58,53 @@ const MenusPage = () => {
   };
 
   return (
-    <div className="p-4 bg-gray-100">
+    <div className="min-h-screen p-4 bg-gray-100">
       <h1 className="text-4xl font-bold mb-4">Menus</h1>
       {menus.map((menu) => (
-        <div key={menu._id} className="p-4 bg-white rounded shadow mb-4">
-          <h2 className="text-2xl font-bold mb-2">{menu.restaurant_name}</h2>
-          <p className="mb-2">{menu.restaurant_slogan}</p>
-          <img
-            src={menu.restaurant_logo_url}
-            alt={menu.restaurant_name}
-            className="w-64 h-64 object-cover mb-4"
-          />
+        <Card key={menu._id} shadow-sm className="max-w-[400px]">
+          <CardHeader className="flex flex-col gap-3">
+            <div className="items-start">
+          <h2 className="text-2xl font-bold">{menu.restaurant_name}</h2>
+          <p>{menu.restaurant_slogan}</p>
+          </div>
+          <Image
+              src={menu.restaurant_logo_url}
+              alt={menu.restaurant_name}
+              width={256}
+              height={256}
+            />
+          </CardHeader>
+          <CardBody className="flex flex-col gap-3 items-center mb-2">
           {menu.food_items.map((item) => (
-            <div key={item.title} className="mb-4">
-              <h3 className="text-xl font-bold mb-1">{item.title}</h3>
-              <p className="mb-1">{item.description}</p>
-              <p className="mb-1">{item.price}</p>
-              <p className="mb-1">{item.dietary_restrictions}</p>
-              <p className="mb-1">{item.vegetarian ? 'Vegetarian' : ''}</p>
-              <p className="mb-1">{item.spicy ? 'Spicy' : ''}</p>
-              <p className="mb-1">{item.gluten_free ? 'Gluten-Free' : ''}</p>
-              <img
+            <Card key={item.title} className="gap-1 pb-5 mb-3 flex flex-col items-center min-w-[256px]">
+              <h3 className="text-xl font-bold ">{item.title}</h3>
+              <p>{item.description}</p>
+              <p>{'$' + (item.price ? item.price : 0)}</p>
+              <p>{item.dietary_restrictions}</p>
+              <p>{item.vegetarian ? 'Vegetarian' : ''}</p>
+              <p>{item.spicy ? 'Spicy' : ''}</p>
+              <p>{item.gluten_free ? 'Gluten-Free' : ''}</p>
+              <Image
                 src={item.picture_url}
                 alt={item.title}
-                className="w-32 h-32 object-cover"
+                width={128}
+                height={128}
               />
-            </div>
+              </Card>
           ))}
+          </CardBody>
+          <CardFooter className="flex flex-col items-center mb-3">
           <Link href={`/menu/${menu._id}`}>
-            <a className="inline-block mt-4 px-4 py-2 bg-blue-500 text-white rounded">View Menu</a>
+            <a target="_blank" rel="noopener noreferrer" className="inline-block mt-4 px-4 py-2 bg-blue-500 text-white rounded">View Menu</a>
           </Link>
-        </div>
+            <button
+              className="inline-block mt-4 px-4 py-2 bg-green-500 text-white rounded"
+              onClick={() => window.open(`https://qrickit.com/api/qr.php?d=${window.location.origin}/menu/${menu._id}&addtext=Scan%20this%20for%20menu&qrsize=150&t=p&e=m`, "_blank")}
+            >
+              Open QR Code
+            </button>
+        </CardFooter>
+        </Card>
       ))}
     </div>
   );
