@@ -124,7 +124,8 @@ const InputPage = () => {
       if (response.ok) {
         const responseData = await response.json();
         // Navigate to the PDF URL
-        window.location.href = responseData.pdf_url;
+        console.log(responseData);
+        //window.location.href = responseData.url;
       } else {
         console.error('Form submission failed');
       }

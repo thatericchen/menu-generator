@@ -6,13 +6,24 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
 import os
 import traceback
+from pymongo import MongoClient
+from bson.objectid import ObjectId
+from dotenv import load_dotenv
+import json
 
 app = Flask(__name__)
 CORS(app)
 
+load_dotenv()
+MONGO_URI = os.getenv('MONGO_URI')
+client = MongoClient(MONGO_URI)
+db = client.menu_gen
+collection = db.menus
+
 UPLOAD_FOLDER = 'uploads'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['UPLOAD_FOLDER'] = "./menu-gen-frontend/uploads"
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+app.config['FRONTEND_URL'] = 'http://localhost:5173'
 
 def generate_pdf(food_items, upload_folder):
     pdf_filename = 'menu.pdf'
@@ -52,10 +63,12 @@ def submit_form():
     restaurant_name = request.form.get('restaurantName')
     restaurant_slogan = request.form.get('restaurantSlogan')
     restaurant_logo = request.files.get('restaurantLogo')
-
+    logo_url = None
     if restaurant_logo:
         logo_filename = secure_filename(restaurant_logo.filename)
-        restaurant_logo.save(os.path.join(app.config['UPLOAD_FOLDER'], logo_filename))
+        logo_path = os.path.join(app.config['UPLOAD_FOLDER'], logo_filename)
+        restaurant_logo.save(logo_path)
+        logo_url = f"{app.config['FRONTEND_URL']}/uploads/{logo_filename}"
 
     food_items = []
     index = 0
@@ -70,6 +83,14 @@ def submit_form():
         spicy = request.form.get(f'foodItems[{index}].spicy') == 'true'
         gluten_free = request.form.get(f'foodItems[{index}].glutenFree') == 'true'
         picture = request.files.get(f'foodItems[{index}].picture')
+        picture_url = None
+
+        if picture:
+            picture_filename = secure_filename(picture.filename)
+            picture_path = os.path.join(app.config['UPLOAD_FOLDER'], picture_filename)
+            picture.save(picture_path)
+            picture_url = f"{app.config['FRONTEND_URL']}/uploads/{logo_filename}"
+            print(f"Saved file to {picture_path}")
 
         item_data = {
             'title': title,
@@ -78,22 +99,28 @@ def submit_form():
             'dietary_restrictions': dietary_restrictions,
             'vegetarian': vegetarian,
             'spicy': spicy,
-            'gluten_free': gluten_free
+            'gluten_free': gluten_free,
+            'picture_url': picture_url
         }
-
-        if picture:
-            picture_filename = secure_filename(picture.filename)
-            picture_path = os.path.join(app.config['UPLOAD_FOLDER'], picture_filename)
-            picture.save(picture_path)
-            print(f"Saved file to {picture_path}")
 
         food_items.append(item_data)
         index += 1
 
-    pdf_filename = generate_pdf(food_items, app.config['UPLOAD_FOLDER'])
-    pdf_url = url_for('uploaded_file', filename=pdf_filename, _external=True)
+    response = {
+        'restaurant_name': restaurant_name,
+        'restaurant_slogan': restaurant_slogan,
+        'restaurant_logo_url': logo_url,
+        'food_items': food_items
+    }
+    insert = collection.insert_one(response)
+    return jsonify({'id': str(insert.inserted_id)})
 
-    return jsonify({'pdf_url': pdf_url})
+@app.route('/menu/<id>')
+def get_menu(id):
+    print(ObjectId(id))
+    menu = collection.find_one({'_id': ObjectId(id)})
+    menu = json.dumps(menu, default=str)
+    return menu
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
