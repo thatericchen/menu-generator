@@ -23,7 +23,11 @@ interface FoodItem {
   glutenFree: boolean;
 }
 
-const InputPage = () => {
+interface InputPageProps {
+  token: string | null;
+}
+
+const InputPage = ({ token }: InputPageProps) => {
   const [restaurantName, setRestaurantName] = useState("");
   const [restaurantLogo, setRestaurantLogo] = useState<File | null>(null);
   const [itemPicture, setItemPicture] = useState<File | null>(null);
@@ -116,22 +120,25 @@ const InputPage = () => {
     });
 
     try {
+      if (token != null) {
       const response = await fetch('http://localhost:5002/submit', {
         method: 'POST',
+        headers: {
+          'x-access-token': token,
+        },
         body: formData,
       });
 
       if (response.ok) {
         const responseData = await response.json();
-        // Navigate to the PDF URL
         console.log(responseData);
-        //window.location.href = responseData.url;
       } else {
         console.error('Form submission failed');
       }
-    } catch (error) {
-      console.error('There was an error submitting the form', error);
     }
+      } catch (error) {
+        console.error('There was an error submitting the form', error);
+      }
   };
 
   return (
