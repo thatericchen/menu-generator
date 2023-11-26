@@ -105,6 +105,7 @@ def register():
         'password': password,
         'public_id': str(uuid.uuid4())
     })
+    u = users_collection.find_one({'email': email, 'password': password})
     token = jwt.encode({
             'public_id': u['public_id'],
             'exp': datetime.utcnow() + timedelta(minutes=30)

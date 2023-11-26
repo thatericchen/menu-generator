@@ -23,7 +23,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
       formData.append('email', credentials.email);
       formData.append('password', credentials.password);
 
-      const response = await fetch("https://cs-3300-final-project.ue.r.appspot.com//login", {
+      const response = await fetch(import.meta.env["BACKEND_URI"] + "/login", {
         method: "POST",
         body: formData,
       });
