@@ -23,6 +23,7 @@ interface FoodItem {
   glutenFree: boolean;
 }
 
+
 const InputPage = () => {
   const [restaurantName, setRestaurantName] = useState("");
   const [restaurantLogo, setRestaurantLogo] = useState<File | null>(null);
@@ -93,7 +94,7 @@ const InputPage = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('restaurantName', restaurantName);
@@ -107,31 +108,34 @@ const InputPage = () => {
       formData.append(`foodItems[${index}].description`, item.description);
       formData.append(`foodItems[${index}].price`, item.price);
       formData.append(`foodItems[${index}].dietaryRestrictions`, item.dietaryRestrictions);
-      formData.append(`foodItems[${index}].vegetarian`, item.vegetarian);
-      formData.append(`foodItems[${index}].spicy`, item.spicy);
-      formData.append(`foodItems[${index}].glutenFree`, item.glutenFree);
+      formData.append(`foodItems[${index}].vegetarian`, String(item.vegetarian));
+      formData.append(`foodItems[${index}].spicy`, String(item.spicy));
+      formData.append(`foodItems[${index}].glutenFree`, String(item.glutenFree));
       if (item.picture) {
         formData.append(`foodItems[${index}].picture`, item.picture);
       }
     });
 
     try {
+      if (localStorage.token) {
       const response = await fetch('http://localhost:5002/submit', {
         method: 'POST',
+        headers: {
+          'x-access-token': localStorage.token,
+        },
         body: formData,
       });
 
       if (response.ok) {
         const responseData = await response.json();
-        // Navigate to the PDF URL
         console.log(responseData);
-        //window.location.href = responseData.url;
       } else {
         console.error('Form submission failed');
       }
-    } catch (error) {
-      console.error('There was an error submitting the form', error);
     }
+      } catch (error) {
+        console.error('There was an error submitting the form', error);
+      }
   };
 
   return (

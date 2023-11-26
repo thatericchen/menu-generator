@@ -43,9 +43,9 @@ const LandingPage = () => {
       />
       <h1 style={titleStyle}>QuickMenu</h1>
       <h2 style={sloganStyle}>Your digital menu, a scan away!</h2>
-      <Button color="primary" onClick={() => navigate("/input")}>
-        Enter
-      </Button>{" "}
+      <Button color="primary" onClick={() => navigate("/login")}>
+        Login
+      </Button>
     </div>
   );
 };
