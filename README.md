@@ -55,22 +55,6 @@ Download Google Cloud CLI for your respective OS and run the script to install i
 
 Navigate to Google Cloud Console and Create a Simple Spring Boot Application.
 
-- Navigate to https://start.spring.io/
-
-  - Project: Maven
-  - Packaginging: jar
-  - Java: 17 (we used 17 instead)/ but based on the instructor's notes, recommend using version 8.
-  - Add the Spring Web dependency and click generate
-
-- Package the Maven Build: To test and get development
-  server running, we will need maven.
-  - If there is a path variable defined for maven run
-    - mvn clean install
-  - If no path variable, macOS can run
-    - ./mvnw clean install
-  - Windows can run
-    - ./mvnw.cmd clean install
-  - These are the packages the maven builds into a JAR file in the target directory which we will use to deploy onto GCP.
 - Deploy to GCP
   - Run gcloud -v to make sure the Google Cloud CLI is installed
   - Run gcloud init to initialize google cloud.
