@@ -130,18 +130,20 @@ def login():
     password = credentials.get('password')
 
     if not email or not password:
-        return jsonify({'message': 'Missing data!'}), 400
+        return jsonify({'message': 'Please provide both email and password.'}), 400
 
     user = users_collection.find_one({'email': email})
 
-    if user and user['password'] == password:
-        token = jwt.encode({
-            'public_id': user['public_id'],
-            'exp': datetime.utcnow() + timedelta(minutes=30)
-        }, SECRET_KEY, algorithm='HS256')
-        return jsonify({'token': token.decode('UTF-8')}), 200
+    if user is None or user.get('password') != password:
+        return jsonify({'message': 'Invalid email or password.'}), 401
 
-    return jsonify({'message': 'Invalid credentials!'}), 401
+    token = jwt.encode({
+        'public_id': user['public_id'],
+        'exp': datetime.utcnow() + timedelta(minutes=30)
+    }, SECRET_KEY, algorithm='HS256')
+
+    return jsonify({'token': token.decode('UTF-8')}), 200
+
 
 @app.route('/submit', methods=['POST'])
 @token_required
