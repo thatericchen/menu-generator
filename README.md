@@ -40,7 +40,6 @@ Refer to the [Troubleshooting](#troubleshooting) section for bug fixes and resol
 
 ## Prerequisite Installations
 
-- Maven
 - Java 17
 - GCP
 - MongoDB 7.0
