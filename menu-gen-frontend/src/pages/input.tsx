@@ -234,15 +234,21 @@ const InputPage = () => {
             className='mb-3'
           />
           <Input
-            label="Price"
-            value={item.price}
-            radius="sm"
-            onChange={(e) =>
-              handleFoodItemChange(index, "price", e.target.value)
-            }
-            className='mb-3'
+          type="number"
+          label="Price"
+          value={item.price}
+          radius="sm"
+          onChange={(e) =>
+            handleFoodItemChange(index, "price", e.target.value)
+          }
+          className='mb-3'
+          placeholder="0.00"
+          startContent={
+            <div className="pointer-events-none flex items-center">
+              <span className="text-default-400 text-small">$</span>
+            </div>
+          }
           />
-
           <Input
             label="Dietary Restrictions"
             value={item.dietaryRestrictions}
