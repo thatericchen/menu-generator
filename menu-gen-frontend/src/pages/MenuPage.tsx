@@ -2,16 +2,25 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, CardHeader, CardBody, Image } from '@nextui-org/react';
 import { Menu } from './MenusPage';
+import { useNavigate } from 'react-router-dom';
+
 
 const MenuPage = () => {
   const [menu, setMenu] = useState<Menu | null>(null);
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
       fetchMenu(id);
     }
   }, [id]);
+
+  const backtomenu = () => {
+    navigate('/menus');
+  };
+
+
 
   const fetchMenu = async (id: string) => {
     try {
@@ -39,6 +48,9 @@ const MenuPage = () => {
 
   return (
       <div className="min-h-screen p-5" style={{ backgroundColor: 'black' }}> {/* Background set to yellow */}
+        <button onClick={backtomenu} className="mb-4 px-4 py-2 bg-gray-300 text-black rounded">
+            Back to Menus
+        </button>
         <Card className="max-w-[400px] mx-auto pb-9" style={{ backgroundColor: 'wheat' }}> {/* Card background set to yellow */}
           <CardHeader className="flex flex-col gap-3 items-start">
             <h1 className="text-4xl font-bold mb-4" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{menu.restaurant_name}</h1> {/* Text color set to black */}
