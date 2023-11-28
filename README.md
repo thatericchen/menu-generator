@@ -133,13 +133,9 @@ If you encounter issues while running the app, refer to the following common pro
 
 ## Future Improvements
 
-### Integration with Real-Time Data <a name="real-time-data"></a>
+### Editing menus
 
-Incorporate real-time data sources like traffic conditions, weather updates, and public transport schedules to provide users with accurate and dynamic carbon footprint calculations. Users will receive real-time estimates, ensuring that the provided data is current and reflective of the actual environmental impact.
-
-### Custom User Profiles <a name="user-profiles"></a>
-
-Custom user profiles would encourage long-term user engagement and offer personalized insights and recommendations. Users can track their progress, encouraging a continued commitment to reducing their carbon footprint during commutes.
+Allow users to edit their past menus, change pictures, etc.
 
 Hint:
 For the front-end, make sure to create a .env file with the following contents:
