@@ -38,40 +38,44 @@ const MenuPage = () => {
   }
 
   return (
-    <div className="min-h-screen p-5 bg-gray-100">
-      <Card shadow-sm className="max-w-[400px] pb-9">
-        <CardHeader className="flex flex-col gap-3">
-          <h1 className="text-4xl font-bold mb-4">{menu.restaurant_name}</h1>
-          <p className="mb-2">{menu.restaurant_slogan}</p>
-          <Image
-            src={menu.restaurant_logo_url}
-            alt={menu.restaurant_name}
-            width={256}
-            height={256}
-            className="mb-4"
-          />
-        </CardHeader>
-        <CardBody className="flex flex-col gap-3 items-center mb-2">
-          {menu.food_items.map((item) => (
-            <Card key={item.title} className="mb-4 flex flex-col items-center min-w-[256px] pb-4">
-              <h3 className="text-xl font-bold mb-1">{item.title}</h3>
-              <p className="mb-1">{item.description}</p>
-              <p>{'$' + (item.price ? item.price : 0)}</p>
-              <p className="mb-1">{item.dietary_restrictions}</p>
-              <p className="mb-1">{item.vegetarian ? 'Vegetarian' : ''}</p>
-              <p className="mb-1">{item.spicy ? 'Spicy' : ''}</p>
-              <p className="mb-1">{item.gluten_free ? 'Gluten-Free' : ''}</p>
-              <Image
-                src={item.picture_url}
-                alt={item.title}
-                width={128}
-                height={128}
-              />
-            </Card>
-          ))}
-        </CardBody>
-      </Card>
-    </div>
+      <div className="min-h-screen p-5" style={{ backgroundColor: 'black' }}> {/* Background set to yellow */}
+        <Card className="max-w-[400px] mx-auto pb-9" style={{ backgroundColor: 'wheat' }}> {/* Card background set to yellow */}
+          <CardHeader className="flex flex-col gap-3 items-start">
+            <h1 className="text-4xl font-bold mb-4" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{menu.restaurant_name}</h1> {/* Text color set to black */}
+            <p className="mb-2" style={{ color: 'black' , fontFamily: 'Apple Chancery, cursive' }}>{menu.restaurant_slogan}</p> {/* Text color set to black */}
+            {menu.restaurant_logo_url && (
+                <Image
+                    src={menu.restaurant_logo_url}
+                    alt={menu.restaurant_name}
+                    width={256}
+                    height={256}
+                    className="mb-4"
+                />
+            )}
+          </CardHeader>
+          <CardBody className="flex flex-col gap-3 items-center mb-2">
+            {menu.food_items.map((item) => (
+                <Card key={item.title} className="mb-4 flex flex-col items-center min-w-[256px] pb-4" style={{ backgroundColor: 'wheat' }}> {/* Card item background set to yellow */}
+                  <h3 className="text-xl font-bold mb-1" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{item.title}</h3> {/* Text color set to black */}
+                  <p className="mb-1" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{item.description}</p> {/* Text color set to black */}
+                  <p className="font-bold" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{'$' + (item.price ? item.price : 0)}</p> {/* Text color set to black */}
+                  <p className="mb-1" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{item.dietary_restrictions}</p> {/* Text color set to black */}
+                  <p className="mb-1" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{item.vegetarian ? 'Vegetarian' : ''}</p> {/* Text color set to black */}
+                  <p className="mb-1" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{item.spicy ? 'Spicy' : ''}</p> {/* Text color set to black */}
+                  <p className="mb-1" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{item.gluten_free ? 'Gluten-Free' : ''}</p> {/* Text color set to black */}
+                  {item.picture_url && (
+                      <Image
+                          src={item.picture_url}
+                          alt={item.title}
+                          width={128}
+                          height={128}
+                      />
+                  )}
+                </Card>
+            ))}
+          </CardBody>
+        </Card>
+      </div>
   );
 };
 
