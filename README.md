@@ -34,7 +34,7 @@ Refer to the [Troubleshooting](#troubleshooting) section for bug fixes and resol
 | Frontend   |                Vite 4.0, React 18.2.0               |
 | Backend    |             Spring Boot 3.1.4, Java 17              |
 | Database   |                     mongodb 7.0                     |
-| Build      |                     MAVEN, GCP                      |
+| Build      |                       GCP                           |
 
 # Install Guide
 
