@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useState, useEffect } from 'react';
 import QRCode from 'qrcode.react';
 import {
@@ -63,7 +62,7 @@ const MenusPage = () => {
       <div className="min-h-screen p-4 bg-gray-100">
         <h1 className="text-4xl font-bold mb-4">Menus</h1>
         {menus.map((menu) => (
-            <Card key={menu._id} shadow={false} className="max-w-[400px] m-auto mb-8">
+            <Card key={menu._id} className="max-w-[400px] m-auto mb-8">
               <CardHeader className="flex flex-col gap-3">
                 <h2 className="text-2xl font-bold">{menu.restaurant_name}</h2>
                 <p>{menu.restaurant_slogan}</p>
