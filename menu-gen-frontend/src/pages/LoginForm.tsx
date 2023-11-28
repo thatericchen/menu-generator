@@ -24,6 +24,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
       formData.append('email', credentials.email);
       formData.append('password', credentials.password);
 
+      console.log(import.meta.env.VITE_BACKEND_URI);
+
       const response = await fetch(import.meta.env["VITE_BACKEND_URI"] + "/login", {
         method: "POST",
         body: formData,

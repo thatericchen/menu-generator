@@ -60,14 +60,13 @@ def generate_pdf(food_items, upload_folder):
             try:
                 picture = ImageReader(picture_path)
                 c.drawImage(picture, 100, y_position - 240, width=200, height=200, preserveAspectRatio=True, mask='auto')
-                y_position -= 280  # Adjust space for image
+                y_position -= 280
             except Exception as e:
                 print(f"Error loading image {picture_path}: {e}")
                 traceback.print_exc()
         else:
-            y_position -= 60  # Adjust space for text only
+            y_position -= 60
 
-        # Check for end of page and create a new page if necessary
         if y_position <= 100:
             c.showPage()
             y_position = 750
@@ -85,7 +84,7 @@ def token_required(f):
             return jsonify({'message' : 'Token is missing'}), 401
         try:
             data = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-            #do this with pymongo
+
             u = users_collection.find_one({'public_id': data['public_id']})
             if u:
                 current_user = json.dumps(u, default=str)
@@ -96,7 +95,7 @@ def token_required(f):
             return jsonify({
                 'message' : 'Token is invalid.'
             }), 401
-        # returns the current logged in users context to the routes
+
         return  f(current_user, *args, **kwargs)
   
     return decorated
@@ -123,22 +122,27 @@ def register():
         }, SECRET_KEY)
     return jsonify({'token': token.decode('UTF-8')})
 
-@app.route('/login', methods =['POST'])
+@app.route('/login', methods=['POST'])
 def login():
-    data = request.form
-    email, password = data.get('email'), data.get('password')
+    credentials = request.form
+    email = credentials.get('email')
+    password = credentials.get('password')
+
     if not email or not password:
-        return jsonify({'message': 'Missing data!'}), 400
-    u = users_collection.find_one({'email': email, 'password': password})
-    if not u:
-        return jsonify({'message': 'SUCCESS'}), 404
-    if u['password'] == password:
-        token = jwt.encode({
-            'public_id': u['public_id'],
-            'exp': datetime.utcnow() + timedelta(minutes=30)
-        }, SECRET_KEY)
-        return jsonify({'token': token})
-    return jsonify({'message': 'Invalid credentials!'}), 401
+        return jsonify({'message': 'Please provide both email and password.'}), 400
+
+    user = users_collection.find_one({'email': email})
+
+    if user is None or user.get('password') != password:
+        return jsonify({'message': 'Invalid email or password.'}), 401
+
+    token = jwt.encode({
+        'public_id': user['public_id'],
+        'exp': datetime.utcnow() + timedelta(minutes=30)
+    }, SECRET_KEY, algorithm='HS256')
+
+    return jsonify({'token': token.decode('UTF-8')}), 200
+
 
 @app.route('/submit', methods=['POST'])
 @token_required
