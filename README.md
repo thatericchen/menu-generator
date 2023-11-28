@@ -76,8 +76,10 @@ Database Setup
 Navigate to the project root directory and execute
 
 ```
-mvn clean install
-gcloud app browse
+pip install -r requirements.txt
+Change GOOGLE_APPLICATION_CREDENTIALS to your GCP OAuth2 file path 
+Change GOOGLE_STORAGE_FILES_BUCKET to your GCP bucket name
+Run main.py (Flask app)
 ```
 
 ## Frontend - React
