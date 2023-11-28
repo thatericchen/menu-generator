@@ -78,7 +78,11 @@ const MenusPage = () => {
                     <Card key={item.title} className="mb-4 flex flex-col items-center w-full">
                       <h3 className="text-xl font-bold">{item.title}</h3>
                       <p>{item.description}</p>
-                      <p>{'$' + (item.price ? item.price : '0')}</p>
+                      <p>{'$' + (item.price ? item.price : 0)}</p>
+                      <p>{item.dietary_restrictions}</p>
+                      <p>{item.vegetarian ? 'Vegetarian' : ''}</p>
+                      <p>{item.spicy ? 'Spicy' : ''}</p>
+                      <p>{item.gluten_free ? 'Gluten-Free' : ''}</p>
                       <Image
                           src={item.picture_url}
                           alt={item.title}
