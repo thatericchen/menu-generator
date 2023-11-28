@@ -47,14 +47,14 @@ const MenuPage = () => {
   }
 
   return (
-      <div className="min-h-screen p-5" style={{ backgroundColor: 'black' }}> {/* Background set to yellow */}
+      <div className="min-h-screen p-5" style={{ backgroundColor: 'black' }}>
         <button onClick={backtomenu} className="mb-4 px-4 py-2 bg-gray-300 text-black rounded">
             Back to Menus
         </button>
-        <Card className="max-w-[400px] mx-auto pb-9" style={{ backgroundColor: 'wheat' }}> {/* Card background set to yellow */}
+        <Card className="max-w-[400px] mx-auto pb-9" style={{ backgroundColor: 'wheat' }}>
           <CardHeader className="flex flex-col gap-3 items-start">
-            <h1 className="text-4xl font-bold mb-4" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{menu.restaurant_name}</h1> {/* Text color set to black */}
-            <p className="mb-2" style={{ color: 'black' , fontFamily: 'Apple Chancery, cursive' }}>{menu.restaurant_slogan}</p> {/* Text color set to black */}
+            <h1 className="text-4xl font-bold mb-4" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{menu.restaurant_name}</h1>
+            <p className="mb-2" style={{ color: 'black' , fontFamily: 'Apple Chancery, cursive' }}>{menu.restaurant_slogan}</p>
             {menu.restaurant_logo_url && (
                 <Image
                     src={menu.restaurant_logo_url}
@@ -67,14 +67,14 @@ const MenuPage = () => {
           </CardHeader>
           <CardBody className="flex flex-col gap-3 items-center mb-2">
             {menu.food_items.map((item) => (
-                <Card key={item.title} className="mb-4 flex flex-col items-center min-w-[256px] pb-4" style={{ backgroundColor: 'wheat' }}> {/* Card item background set to yellow */}
-                  <h3 className="text-xl font-bold mb-1" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{item.title}</h3> {/* Text color set to black */}
-                  <p className="mb-1" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{item.description}</p> {/* Text color set to black */}
-                  <p className="font-bold" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{'$' + (item.price ? item.price : 0)}</p> {/* Text color set to black */}
-                  <p className="mb-1" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{item.dietary_restrictions}</p> {/* Text color set to black */}
-                  <p className="mb-1" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{item.vegetarian ? 'Vegetarian' : ''}</p> {/* Text color set to black */}
-                  <p className="mb-1" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{item.spicy ? 'Spicy' : ''}</p> {/* Text color set to black */}
-                  <p className="mb-1" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{item.gluten_free ? 'Gluten-Free' : ''}</p> {/* Text color set to black */}
+                <Card key={item.title} className="mb-4 flex flex-col items-center min-w-[256px] pb-4" style={{ backgroundColor: 'wheat' }}>
+                  <h3 className="text-xl font-bold mb-1" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{item.title}</h3>
+                  <p className="mb-1" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{item.description}</p>
+                  <p className="font-bold" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{'$' + (item.price ? item.price : 0)}</p>
+                  <p className="mb-1" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{item.dietary_restrictions}</p>
+                  <p className="mb-1" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{item.vegetarian ? 'Vegetarian' : ''}</p>
+                  <p className="mb-1" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{item.spicy ? 'Spicy' : ''}</p>
+                  <p className="mb-1" style={{ color: 'black', fontFamily: 'Apple Chancery, cursive' }}>{item.gluten_free ? 'Gluten-Free' : ''}</p>
                   {item.picture_url && (
                       <Image
                           src={item.picture_url}

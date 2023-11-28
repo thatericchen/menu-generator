@@ -80,7 +80,6 @@ const MenusPage = () => {
                       <h3 className="text-xl font-bold">{item.title}</h3>
                       <p>{item.description}</p>
                       <p>{'$' + (item.price ? item.price : '0')}</p>
-                      {/* ... other item properties ... */}
                       <Image
                           src={item.picture_url}
                           alt={item.title}
@@ -97,7 +96,6 @@ const MenusPage = () => {
                   </a>
                 </Link>
                 <div className="mt-4">
-                  {/* QR Code generation */}
                   <QRCode
                       value={`http://cs3300-gcp-assignment-401202.uc.r.appspot.com/menu/${menu._id}`}
                       size={150}
