@@ -1,27 +1,36 @@
-# CS3300 Project 2 - menu-generator
+# CS3300 Project 2 - Menu Generator
+
 CS 3300 (Fall 2023) Project 2 - Group 8
 
 ## Visit
 
-Deployed @ [CS3300 Project 2](https://cs3300proj1frontend.ue.r.appspot.com/)
+Deployed @ [CS3300 Project 2](https://cs3300-gcp-assignment-401202.uc.r.appspot.com/)
 
 ## Release Notes
 
-### Main Features
+### New Features
 
-#### V3.0 - Generating menu and QR code
+#### V4.0 - Menu and QR Code Generation
 
-- Based on the information provided by hosters, after submitting the menus, hosters can get menus preview and see the QR code at the same time.
-- Customers can scan the QR code and see the menus directly.
+- Users can upload their menu details, and immediately get a visual preview of how the menu will appear to customers.
+- A unique QR code is generated for each menu. Hosts can print or display this QR code in their restaurant, enabling customers to access the menu digitally.
+- Customers can scan the QR code using their mobile devices to view the menu.
 
-#### V2.0 - Information collection
+#### V3.0 - Information Collection for Restaurants
 
-- Restaurant should provide information of their restaurants, such as name, main dishes and description of their dishes, etc
+- Restaurants are prompted to create profiles including their name, slogan, and logo.
+- Options for restaurants to provide extensive details about their main dishes, including ingredients, dietary information, and dish descriptions.
+- Implemented uploading for restaurants to add images of dishes.
 
-#### V1.0 - Login and Signup Pages
+#### V2.0 - User Registration and Login
 
 - Introduced secure login and signup pages. Prompts user for first name, last name, email, and password.
+- Implementation of MongoDB for robust data management and storage, ensuring data security.
+
+#### V1.0 - Landing and Input Pages
+
 - Began app UI design.
+- Development of initial landing and input pages allowing users and restaurant owners to start inputting menu item data into the app.
 
 ### Bug Fixes + Known Bugs and Defects
 
@@ -29,12 +38,12 @@ Refer to the [Troubleshooting](#troubleshooting) section for bug fixes and resol
 
 # Frameworks and Tools Used
 
-| Components |                     Technology                      |
-| :--------- | :-------------------------------------------------: |
-| Frontend   |                Vite 4.0, React 18.2.0               |
-| Backend    |             Spring Boot 3.1.4, Java 17              |
-| Database   |                     mongodb 7.0                     |
-| Build      |                       GCP                           |
+| Components |            Technology             |
+| :--------- | :-------------------------------: |
+| Frontend   |      Vite 4.0, React 18.2.0       |
+| Backend    | Flask 2.2.2, Java 17, QRCodeReact |
+| Database   |            MongoDB 7.0            |
+| Build      |                GCP                |
 
 # Install Guide
 
@@ -44,72 +53,89 @@ Refer to the [Troubleshooting](#troubleshooting) section for bug fixes and resol
 - GCP
 - MongoDB 7.0
 
-## GCP instruction and MongoDB configuration:
+## GCP Instructions and MongoDB Configuration:
+
+### GCP Setup
 
 Download Google Cloud CLI for your respective OS and run the script to install it.
 
-- GCP credit application
-- Make Sure Billing Information is Set Up
-- Create a new project
+- GCP credit application.
+- Make sure Billing Information is set up.
+- Create a new project.
 
-Navigate to Google Cloud Console and Create a Simple Spring Boot Application.
+Deploy to GCP.
 
-- Deploy to GCP
-  - Run gcloud -v to make sure the Google Cloud CLI is installed
-  - Run gcloud init to initialize google cloud.
-  - Make sure to choose the default configuration
-  - You will then be prompted to login with your email. (Make sure to use the email that has billing set up with the credits provided)
+- Run `gcloud -v` to make sure the Google Cloud CLI is installed.
+- Run `gcloud init` to initialize google cloud.
+- Make sure to choose the default configuration.
+- You will then be prompted to login with your email (make sure to use the email that has billing set up with the credits provided).
 
-Database Setup
+### Database Setup
 
-- MongoDB
+MongoDB
 
-  - Set the url to the MongoDB in environment variable, and we set this auto_create_database connect with GCP, and set up the authentication with GCP, then create a admin role, and we get this url:`spring.data.mongodb.uri=mongodb+srv://adminUser:yourSecurePassword@127.0.0.1:27017/accounts`, replacing `<adminUser>`, `<yourSecurePassword>`, and `<127.0.0.1:27017>` with your IP range.
+- Create an environment variable, for example, `MONGODB_URI`, and assign your MongoDB connection string to this variable.
+  - Format: `mongodb+srv://[username]:[password]@[cluster-address]/[database]`.
+- Configure MongoDB in GCP to auto-create the database if it doesn't exist.
+- Assign required roles and securely store the service account's credentials.
+- Create an administrative user in MongoDB for database management.
+- Replace placeholders in the URL: `spring.data.mongodb.uri=mongodb+srv://adminUser:yourSecurePassword@cluster-address/database`.
+- Use your actual admin username, password, and cluster address.
+- Implement this URL in your application's configuration.
 
-- Once successfully deployed, there will be a URL in the console to take you to where the project is deployed.
-- If not, run：
-  - gcloud app browse
-- Clean up to avoid billing charges: Project settings => shut down project
+Once successfully deployed, there will be a URL in the console to take you to where the project is deployed.
 
-## Backend - Spring Boot Configuration
+If not, run：
 
-Navigate to the project root directory and execute
+- `gcloud app browse`
+
+Clean up to avoid billing charges: Project settings -> shut down project
+
+## Backend - GCP Configuration
+
+Navigate to project root directory and execute
 
 ```
 pip install -r requirements.txt
-Change GOOGLE_APPLICATION_CREDENTIALS to your GCP OAuth2 file path 
+Change GOOGLE_APPLICATION_CREDENTIALS to your GCP OAuth2 file path
 Change GOOGLE_STORAGE_FILES_BUCKET to your GCP bucket name
 Run main.py (Flask app)
 ```
 
 ## Frontend - React
 
-Navigate to `./frontend/` directory and execute
+Navigate to `./menu-gen-frontend/` directory and execute
 
 ```
-npm install / npm i
+npm install
 npm run dev
 ```
 
-The app should be available on http://localhost:5173
+The app should be available on http://localhost:5173.
 
-#### Login page
+#### Landing Page
+
+![image](https://cdn.discordapp.com/attachments/1088898204948512790/1179275544328679464/Screenshot_2023-11-28_at_11.19.50_PM.png?ex=657930ef&is=6566bbef&hm=178b880d304a4312f5396b335984d71eb1a5328925385894670ab6acd14b8a43&)
+
+#### Login Page
 
 ![image](https://github.com/jamesli12/menu-generator/assets/91359766/f3e4ee67-438c-4d7e-9068-e9e126d60e34)
 
-#### Signup page
+#### Sign Up Page
 
 ![image](https://github.com/jamesli12/menu-generator/assets/91359766/bde43fa0-7a98-49d5-98a6-5c8e1d3577ab)
 
-#### Collecting information for generating menu
+#### Restaurant Data Collection
 
-![image](https://github.com/jamesli12/menu-generator/assets/91359766/c3ab5fb5-4b35-4923-acc2-ab1c6e12ac54)
+![image](https://cdn.discordapp.com/attachments/1088898204948512790/1179275095156461648/Screenshot_2023-11-28_at_10.56.05_PM.png?ex=65793084&is=6566bb84&hm=fc1aff743f57c75f2b76a843d01e1190f6592517230ce0b1cf03bde49dfb787e&)
 
+#### Menu Item Data Collection
 
-#### Menus and QRcode generating page
+![image](https://cdn.discordapp.com/attachments/1088898204948512790/1179275243076988998/Screenshot_2023-11-28_at_10.56.19_PM.png?ex=657930a7&is=6566bba7&hm=4e916ca4318143fd76005cd3528723c4ecf1a7ee66a45f64006c456b9d89dd55&)
 
-![image](https://github.com/jamesli12/menu-generator/assets/91359766/115a042f-227d-464d-8e06-6035c3a5807a)
+#### Menu and QR Code Generation
 
+![image](https://cdn.discordapp.com/attachments/1088898204948512790/1179277576313765999/ezgif-1-2002d20f82.gif?ex=657932d4&is=6566bdd4&hm=c0118567271cfcdd101775389d999f852da911926f3f2c056df2222c1a1b028b&)
 
 ## Troubleshooting <a name="troubleshooting"></a>
 
@@ -122,24 +148,30 @@ If you encounter issues while running the app, refer to the following common pro
 
 ### Bug Fixes
 
-- **Dropdown Menu Loading Issue:**
+- **QR Code Not Scanning Properly**
 
-  - **Problem:** The dropdown wasn’t displaying all options.
-  - **Solution:** Ensure the app is updated to the latest version where the data retrieval and rendering process is enhanced. Clear the browser cache or try a different browser if the issue persists.
+  - **Problem:** QR codes generated are not scannable or lead to incorrect links.
+  - **Solution:** Ensure QR codes have adequate resolution and contrast. Validate the encoded URL for correctness before generating the QR code.
 
 - **UI Inconsistencies across Devices:**
-  - **Problem:** The user interface isn't rendering consistently on all devices.
-  - **Future Solution:** Adaptive UI has not been implemented yet, so this will be a future feature we can implement.
+
+  - **Problem:** The user interface is not rendering consistently on all devices.
+  - **Future Solution:** Adaptive UI has not been implemented yet, so this can be a future feature to implement.
+
+### .env in `./menu-gen-frontend/`
+
+Make sure to create a .env file with the following contents:
+
+`BACKEND_URI="https://cs-3300-final-project.ue.r.appspot.com"`
+
+If you are not using the deployed backend, you can change that URL to anything you want.
 
 ## Future Improvements
 
-### Editing menus
+### Advanced Customization Options for Menus
 
-Allow users to edit their past menus, change pictures, etc.
+Introduce more diverse templates, fonts, and layout options to allow for greater customization of menus.
 
-Hint:
-For the front-end, make sure to create a .env file with the following contents:
-BACKEND_URI="https://cs-3300-final-project.ue.r.appspot.com"
-If you're not using the deployed backend, change that URL to anything you want.
+### Dynamic Menu Updates
 
-### Team 8
+Enable real-time menu updates, allowing restaurants to instantly change items, prices, or availability. Notifications for customers about new items or daily specials.
