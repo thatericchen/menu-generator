@@ -138,7 +138,7 @@ The app should be available on http://localhost:5173.
 
 #### Menu and QR Code Generation
 
-![image](https://cdn.discordapp.com/attachments/1088898204948512790/1179277576313765999/ezgif-1-2002d20f82.gif?ex=657932d4&is=6566bdd4&hm=c0118567271cfcdd101775389d999f852da911926f3f2c056df2222c1a1b028b&)
+![ezgif-1-2002d20f82](https://github.com/jamesli12/menu-generator/assets/112535058/8a62bb4a-5383-4296-be3b-8c62146588e8)
 
 ## Troubleshooting <a name="troubleshooting"></a>
 
