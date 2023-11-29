@@ -91,7 +91,9 @@ If not, run：
 
 Clean up to avoid billing charges: Project settings -> shut down project
 
-## Backend - GCP Configuration
+## Download & Build Instructions
+
+### Backend - GCP Configuration
 
 Navigate to project root directory and execute
 
@@ -102,7 +104,7 @@ Change GOOGLE_STORAGE_FILES_BUCKET to your GCP bucket name
 Run main.py (Flask app)
 ```
 
-## Frontend - React
+### Frontend - React
 
 Navigate to `./menu-gen-frontend/` directory and execute
 
