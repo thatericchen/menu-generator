@@ -92,6 +92,7 @@ If not, run：
 Clean up to avoid billing charges: Project settings -> shut down project
 
 ## Download & Build Instructions
+First, clone the repository by running `git clone https://github.com/jamesli12/menu-generator.git`.
 
 ### Backend - GCP Configuration
 
