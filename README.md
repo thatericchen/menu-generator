@@ -25,9 +25,6 @@ Key features include:
 - Began app UI design.
 - Development of initial landing and input pages allowing users and restaurant owners to start inputting menu item data into the app.
 
-### Bug Fixes + Known Bugs and Defects
-Refer to the [Troubleshooting](#troubleshooting) section for bug fixes and resolution steps.
-
 ## Frameworks and Tools Used
 | Components |            Technology             |
 | :--------- | :-------------------------------: |
@@ -99,65 +96,41 @@ npm run dev
 
 The app should be available on http://localhost:5173.
 
-#### Landing Page
-
-![image](https://cdn.discordapp.com/attachments/1088898204948512790/1179275544328679464/Screenshot_2023-11-28_at_11.19.50_PM.png?ex=657930ef&is=6566bbef&hm=178b880d304a4312f5396b335984d71eb1a5328925385894670ab6acd14b8a43&)
-
 #### Login Page
-
 ![image](https://github.com/jamesli12/menu-generator/assets/91359766/f3e4ee67-438c-4d7e-9068-e9e126d60e34)
 
 #### Sign Up Page
-
 ![image](https://github.com/jamesli12/menu-generator/assets/91359766/bde43fa0-7a98-49d5-98a6-5c8e1d3577ab)
 
-#### Restaurant Data Collection
-
-![image](https://cdn.discordapp.com/attachments/1088898204948512790/1179275095156461648/Screenshot_2023-11-28_at_10.56.05_PM.png?ex=65793084&is=6566bb84&hm=fc1aff743f57c75f2b76a843d01e1190f6592517230ce0b1cf03bde49dfb787e&)
-
-#### Menu Item Data Collection
-
-![image](https://cdn.discordapp.com/attachments/1088898204948512790/1179275243076988998/Screenshot_2023-11-28_at_10.56.19_PM.png?ex=657930a7&is=6566bba7&hm=4e916ca4318143fd76005cd3528723c4ecf1a7ee66a45f64006c456b9d89dd55&)
-
 #### Menu and QR Code Generation
-
 ![ezgif-1-2002d20f82](https://github.com/jamesli12/menu-generator/assets/112535058/8a62bb4a-5383-4296-be3b-8c62146588e8)
 
 ## Troubleshooting <a name="troubleshooting"></a>
-
 If you encounter issues while running the app, refer to the following common problems and their solutions:
 
 ### MongoDB Configuration
-
 - **Issue:** The app is not connecting to the MongoDB instance when running locally.
 - **Solution:** Ensure that you have a running MongoDB instance and place the connection link in the environmental variables. Use the format `mongodb+srv://<username>:<password>@<cluster-address>` replacing `<username>`, `<password>`, and `<cluster-address>` with your MongoDB credentials and address.
 
 ### Bug Fixes
-
 - **QR Code Not Scanning Properly**
-
   - **Problem:** QR codes generated are not scannable or lead to incorrect links.
   - **Solution:** Ensure QR codes have adequate resolution and contrast. Validate the encoded URL for correctness before generating the QR code.
-
 - **UI Inconsistencies across Devices:**
-
   - **Problem:** The user interface is not rendering consistently on all devices.
   - **Future Solution:** Adaptive UI has not been implemented yet, so this can be a future feature to implement.
 
 ### .env in `./menu-gen-frontend/`
-
 Make sure to create a .env file with the following contents:
-
 `BACKEND_URI="https://cs-3300-final-project.ue.r.appspot.com"`
-
 If you are not using the deployed backend, you can change that URL to anything you want.
 
-## Future Improvements
-
+## Next Steps
 ### Advanced Customization Options for Menus
-
 Introduce more diverse templates, fonts, and layout options to allow for greater customization of menus.
 
 ### Dynamic Menu Updates
-
 Enable real-time menu updates, allowing restaurants to instantly change items, prices, or availability. Notifications for customers about new items or daily specials.
+
+## Acknowledgements
+Zexiu An, Eric Chen, Tingyue He, James Li, Karen Sun
