@@ -1,7 +1,15 @@
 # Menu Generator
 
+## Introduction
+Menu Generator is a web application designed to help restaurants seamlessly create, manage, and share digital menus. This platform allows restaurant owners to easily input menu details, generate visually appealing digital menus, and provide instant access to customers through QR codes. By simplifying menu management and enhancing the dining experience, Menu Generator bridges the gap between traditional menu design and modern digital convenience.
+
+Key features include:
+- Restaurant profile creation and menu item management
+- Automatic QR code generation for digital menus
+- Responsive menu preview for customers
+- Secure user authentication and data storage
+
 ## Release Notes
-### New Features
 #### V4.0 - Menu and QR Code Generation
 - Users can upload their menu details, and immediately get a visual preview of how the menu will appear to customers.
 - A unique QR code is generated for each menu. Hosts can print or display this QR code in their restaurant, enabling customers to access the menu digitally.
