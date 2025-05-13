@@ -1,43 +1,26 @@
-# CS3300 Project 2 - Menu Generator
-
-CS 3300 (Fall 2023) Project 2 - Group 8
-
-## Visit
-
-Deployed @ [CS3300 Project 2](https://cs3300-gcp-assignment-401202.uc.r.appspot.com/)
+# Menu Generator
 
 ## Release Notes
-
 ### New Features
-
 #### V4.0 - Menu and QR Code Generation
-
 - Users can upload their menu details, and immediately get a visual preview of how the menu will appear to customers.
 - A unique QR code is generated for each menu. Hosts can print or display this QR code in their restaurant, enabling customers to access the menu digitally.
 - Customers can scan the QR code using their mobile devices to view the menu.
-
 #### V3.0 - Information Collection for Restaurants
-
 - Restaurants are prompted to create profiles including their name, slogan, and logo.
 - Options for restaurants to provide extensive details about their main dishes, including ingredients, dietary information, and dish descriptions.
 - Implemented uploading for restaurants to add images of dishes.
-
 #### V2.0 - User Registration and Login
-
 - Introduced secure login and signup pages. Prompts user for first name, last name, email, and password.
 - Implementation of MongoDB for robust data management and storage, ensuring data security.
-
 #### V1.0 - Landing and Input Pages
-
 - Began app UI design.
 - Development of initial landing and input pages allowing users and restaurant owners to start inputting menu item data into the app.
 
 ### Bug Fixes + Known Bugs and Defects
-
 Refer to the [Troubleshooting](#troubleshooting) section for bug fixes and resolution steps.
 
-# Frameworks and Tools Used
-
+## Frameworks and Tools Used
 | Components |            Technology             |
 | :--------- | :-------------------------------: |
 | Frontend   |      Vite 4.0, React 18.2.0       |
@@ -45,35 +28,27 @@ Refer to the [Troubleshooting](#troubleshooting) section for bug fixes and resol
 | Database   |            MongoDB 7.0            |
 | Build      |                GCP                |
 
-# Install Guide
-
-## Prerequisite Installations
-
+## Install Guide
+### Prerequisite Installations
 - Java 17
 - GCP
 - MongoDB 7.0
 
-## GCP Instructions and MongoDB Configuration:
-
-### GCP Setup
-
+### GCP Instructions and MongoDB Configuration:
+#### GCP Setup
 Download Google Cloud CLI for your respective OS and run the script to install it.
-
 - GCP credit application.
 - Make sure Billing Information is set up.
 - Create a new project.
 
 Deploy to GCP.
-
 - Run `gcloud -v` to make sure the Google Cloud CLI is installed.
 - Run `gcloud init` to initialize google cloud.
 - Make sure to choose the default configuration.
 - You will then be prompted to login with your email (make sure to use the email that has billing set up with the credits provided).
 
-### Database Setup
-
+#### Database Setup
 MongoDB
-
 - Create an environment variable, for example, `MONGODB_URI`, and assign your MongoDB connection string to this variable.
   - Format: `mongodb+srv://[username]:[password]@[cluster-address]/[database]`.
 - Configure MongoDB in GCP to auto-create the database if it doesn't exist.
@@ -91,10 +66,10 @@ If not, run：
 
 Clean up to avoid billing charges: Project settings -> shut down project
 
-## Download, Build, & Run Instructions
+### Download, Build, & Run Instructions
 First, clone the repository by running `git clone https://github.com/jamesli12/menu-generator.git`.
 
-### Backend - GCP Configuration
+#### Backend - GCP Configuration
 
 Navigate to project root directory and execute
 
@@ -105,7 +80,7 @@ Change GOOGLE_STORAGE_FILES_BUCKET to your GCP bucket name
 Run main.py (Flask app)
 ```
 
-### Frontend - React
+#### Frontend - React
 
 Navigate to `./menu-gen-frontend/` directory and execute
 
