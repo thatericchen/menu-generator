@@ -110,7 +110,7 @@ If you encounter issues while running the app, refer to the following common pro
 - **QR Code Not Scanning Properly**
   - **Problem:** QR codes generated are not scannable or lead to incorrect links.
   - **Solution:** Ensure QR codes have adequate resolution and contrast. Validate the encoded URL for correctness before generating the QR code.
-- **UI Inconsistencies across Devices:**
+- **UI Inconsistencies Across Devices**
   - **Problem:** The user interface is not rendering consistently on all devices.
   - **Future Solution:** Adaptive UI has not been implemented yet, so this can be a future feature to implement.
 
