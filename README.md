@@ -120,11 +120,7 @@ Make sure to create a .env file with the following contents:
 If you are not using the deployed backend, you may change the URL.
 
 ## Next Steps
-### Advanced Customization Options for Menus
-Introduce more diverse templates, fonts, and layout options to allow for greater customization of menus.
-
-### Dynamic Menu Updates
-Enable real-time menu updates, allowing restaurants to instantly change items, prices, or availability. Notifications for customers about new items or daily specials.
+For the next phase of development, we aim to introduce advanced customization options for menus, including more diverse templates, fonts, and layout choices, to empower restaurant owners with greater flexibility and creativity in presenting their menus. Additionally, we plan to implement dynamic menu updates that will allow restaurants to make real-time changes to items, prices, or availability, along with the ability to notify customers about new offerings or daily specials instantly.
 
 ## Acknowledgements
 Zexiu An, Eric Chen, Tingyue He, James Li, Karen Sun
