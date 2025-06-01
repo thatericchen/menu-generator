@@ -103,7 +103,7 @@ The app will be available on http://localhost:5173.
 If you encounter issues while running the app, refer to the following common problems and their solutions.
 
 ### MongoDB Configuration
-- **Issue:** The app is not connecting to the MongoDB instance when running locally.
+- **Problem:** The app is not connecting to the MongoDB instance when running locally.
 - **Solution:** Ensure that you have a running MongoDB instance and place the connection link in the environmental variables. Use the format `mongodb+srv://<username>:<password>@<cluster-address>` replacing `<username>`, `<password>`, and `<cluster-address>` with your MongoDB credentials and address.
 
 ### Bug Fixes
