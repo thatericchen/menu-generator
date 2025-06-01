@@ -116,7 +116,7 @@ If you encounter issues while running the app, refer to the following common pro
 
 ### .env in `./menu-gen-frontend/`
 Make sure to create a .env file with the following contents:
-`BACKEND_URI="https://cs-3300-final-project.ue.r.appspot.com"`
+`BACKEND_URI="https://cs-3300-final-project.ue.r.appspot.com"`.
 If you are not using the deployed backend, you can change that URL to anything you want.
 
 ## Next Steps
