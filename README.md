@@ -100,7 +100,7 @@ The app will be available on http://localhost:5173.
 ![ezgif-1-2002d20f82](https://github.com/jamesli12/menu-generator/assets/112535058/8a62bb4a-5383-4296-be3b-8c62146588e8)
 
 ## Troubleshooting <a name="troubleshooting"></a>
-If you encounter issues while running the app, refer to the following common problems and their solutions:
+If you encounter issues while running the app, refer to the following common problems and their solutions.
 
 ### MongoDB Configuration
 - **Issue:** The app is not connecting to the MongoDB instance when running locally.
