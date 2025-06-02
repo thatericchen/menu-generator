@@ -40,7 +40,7 @@ Download Google Cloud CLI for your respective OS and run the script to install i
 - Make sure Billing Information is set up.
 - Create a new project.
 
-Deploy to GCP.
+Deploy to GCP
 - Run `gcloud -v` to make sure the Google Cloud CLI is installed.
 - Run `gcloud init` to initialize google cloud.
 - Make sure to choose the default configuration.
