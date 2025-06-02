@@ -36,9 +36,9 @@ Menu Generator is a web application designed to help restaurants seamlessly crea
 ### GCP Instructions and MongoDB Configuration
 #### GCP Setup
 Download Google Cloud CLI for your respective OS and run the script to install it.
-- GCP credit application.
-- Make sure Billing Information is set up.
-- Create a new project.
+- GCP credit application
+- Make sure billing information is set up
+- Create a new project
 
 Deploy to GCP
 - Run `gcloud -v` to make sure the Google Cloud CLI is installed.
